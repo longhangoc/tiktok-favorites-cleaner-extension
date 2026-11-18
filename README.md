@@ -32,6 +32,8 @@ Có **2 cơ chế xoá** trong cùng một extension:
   <br /><b>Panel sau khi xoá xong — nút “Kiểm tra lại”</b>
 </p>
 
+> Có thể mở trực tiếp `screenshots/preview-popup.html` và `screenshots/preview-panel.html` bằng trình duyệt để xem lại giao diện mà không cần cài extension.
+
 ## Tính năng
 
 - Liệt kê toàn bộ video trong **Favorites → Posts** (tự cuộn để tải hết).
