@@ -1,0 +1,13 @@
+{
+  "name": "tiktok-favorites-cleaner-extension",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Chrome extension xoá toàn bộ video khỏi mục Yêu thích trên TikTok (có API nhanh + giao diện).",
+  "scripts": {
+    "test": "node tests/run-all.cjs",
+    "check": "node --check content.js && node --check background.js && node --check popup.js"
+  },
+  "devDependencies": {
+    "jsdom": "^31.0.0"
+  }
+}

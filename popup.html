@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TikTok Favorites Cleaner</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header>
+        <h1><span class="dot"></span>TikTok Favorites Cleaner</h1>
+        <p class="sub">Xoá toàn bộ video khỏi mục Yêu thích</p>
+      </header>
+
+      <div class="card">
+        <div class="field">
+          <label for="method">Cơ chế xoá</label>
+          <select id="method">
+            <option value="auto">Tự động (API + dự phòng giao diện)</option>
+            <option value="api">API nhanh</option>
+            <option value="ui">Giao diện (bấm nút bookmark)</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="delay">Tốc độ giữa mỗi video <span id="delayVal">0.7s</span></label>
+          <input type="range" id="delay" min="300" max="3000" step="100" value="700" />
+        </div>
+      </div>
+
+      <button id="dryrunBtn" class="btn ghost">Chạy thử (không xoá)</button>
+      <button id="removeBtn" class="btn danger">Xoá tất cả</button>
+      <button id="stopBtn" class="btn danger-outline" hidden>Dừng</button>
+
+      <div class="status" id="status" role="status" aria-live="polite">Sẵn sàng</div>
+      <div class="hint">
+        Mở TikTok → Profile → Favorites → Posts trước khi bấm.
+      </div>
+    </div>
+    <script src="popup.js"></script>
+  </body>
+</html>

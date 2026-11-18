@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TikTok Favorites Cleaner — Popup preview</title>
+    <link rel="stylesheet" href="../popup.css" />
+    <style>
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        width: auto;
+        background: #0b0b10;
+        background-image: radial-gradient(circle at 20% 0%, #1b1b26 0%, #0b0b10 60%);
+      }
+      .stage {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 28px 16px;
+      }
+      .app {
+        width: 340px;
+        background: #0f0f14;
+        border: 1px solid #262631;
+        border-radius: 14px;
+        box-shadow: 0 24px 70px rgba(0, 0, 0, 0.65);
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stage">
+      <div class="app" id="popupCard" role="img" aria-label="PopupPreview">
+        <header>
+          <h1><span class="dot"></span>TikTok Favorites Cleaner</h1>
+          <p class="sub">Xoá toàn bộ video khỏi mục Yêu thích</p>
+        </header>
+
+        <div class="card">
+          <div class="field">
+            <label for="method">Cơ chế xoá</label>
+            <select id="method">
+              <option value="auto" selected>Tự động (API + dự phòng giao diện)</option>
+              <option value="api">API nhanh</option>
+              <option value="ui">Giao diện (bấm nút bookmark)</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="delay">Tốc độ giữa mỗi video <span id="delayVal">0.7s</span></label>
+            <input type="range" id="delay" min="300" max="3000" step="100" value="700" />
+          </div>
+        </div>
+
+        <button id="dryrunBtn" class="btn ghost">Chạy thử (không xoá)</button>
+        <button id="removeBtn" class="btn danger">Xoá tất cả</button>
+        <button id="stopBtn" class="btn danger-outline" hidden>Dừng</button>
+
+        <div class="status" id="status" role="status" aria-live="polite">
+          Sẵn sàng
+        </div>
+        <div class="hint">
+          Mở TikTok → Profile → Favorites → Posts trước khi bấm.
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Chrome API giả để popup.js chạy được ngoài extension.
+      window.chrome = {
+        runtime: {
+          lastError: null,
+          onMessage: {
+            addListener() {},
+          },
+        },
+        storage: {
+          local: {
+            get(_keys, cb) {
+              cb({ tfcConfig: { method: "auto", delayMs: 700 } });
+            },
+            set() {},
+          },
+        },
+        tabs: {
+          query() {
+            return Promise.resolve([
+              { id: 1, url: "https://www.tiktok.com/@me" },
+            ]);
+          },
+          sendMessage(_tabId, msg, cb) {
+            if (msg && msg.action === "tfc:getStatus") {
+              cb({ status: "Sẵn sàng", running: false, phase: "idle", total: 0 });
+              return;
+            }
+            if (typeof cb === "function") cb({ ok: true });
+          },
+        },
+      };
+    </script>
+    <script src="../popup.js"></script>
+  </body>
+</html>
